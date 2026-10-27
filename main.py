@@ -16,7 +16,7 @@ def on_closed():
 def main():
     # Initialize the database
     init_db()
-    
+
     # Ensure Ollama is running before starting the server
     ollama_ready = asyncio.run(ensure_ollama_running())
 
@@ -28,6 +28,12 @@ def main():
 
     # Creates our window, Titles window 'Rhy', and points it to the FastAPI server
     window = webview.create_window('Rhy', 'http://127.0.0.1:8000')
+
+    # Check if the window was created successfully
+    if window is None:
+        print("Error: Failed to create the webview window.")
+        return
+    
     window.events.closed += on_closed  # Attach the on_closed function to the Window's closed event
     webview.start() # Starts the GUI Window
 
